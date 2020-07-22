@@ -1,4 +1,4 @@
-package atendimento.gestaosenhas.dao;
+package atendimento.gestaosenhas.repository;
 
 import org.springframework.data.repository.CrudRepository;
 

@@ -15,8 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="senha_chamada")
-public class SenhaChamada implements Serializable {
+@Table(name="senha")
+public class Senha implements Serializable {
 
 	private static final long serialVersionUID = 7988989705795023613L;
 	
@@ -24,18 +24,19 @@ public class SenhaChamada implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long id;
 	
-	protected Date timestampEmitida;
-	
-	protected Date timestampChamada;
-	
 	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.REFRESH)
 	@JoinColumn(name = "codigo_tipo_senha", referencedColumnName = "codigo")
 	protected TipoSenha tipoSenha;
     
 	protected Integer numero;
+
+	protected Date timestampEmissao;
+	
+	protected Date timestampChamada;
+	
     // protected Integer numeroGuiche;
 
-    public SenhaChamada() {
+    public Senha() {
     }
 
 	public Long getId() {
@@ -44,22 +45,6 @@ public class SenhaChamada implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Date getTimestampEmitida() {
-		return timestampEmitida;
-	}
-
-	public void setTimestampEmitida(Date timestampEmitida) {
-		this.timestampEmitida = timestampEmitida;
-	}
-
-	public Date getTimestampChamada() {
-		return timestampChamada;
-	}
-
-	public void setTimestampChamada(Date timestampChamada) {
-		this.timestampChamada = timestampChamada;
 	}
 
     public TipoSenha getTipoSenha() {
@@ -78,23 +63,39 @@ public class SenhaChamada implements Serializable {
         this.numero = numero;
     }
 
+	public Date getTimestampEmissao() {
+		return timestampEmissao;
+	}
+
+	public void setTimestampEmissao(Date timestampEmissao) {
+		this.timestampEmissao = timestampEmissao;
+	}
+
+	public Date getTimestampChamada() {
+		return timestampChamada;
+	}
+
+	public void setTimestampChamada(Date timestampChamada) {
+		this.timestampChamada = timestampChamada;
+	}
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof SenhaChamada)) {
+        if (!(o instanceof Senha)) {
             return false;
         }
-        SenhaChamada senhaChamada = (SenhaChamada) o;
+        Senha senhaChamada = (Senha) o;
         return Objects.equals(tipoSenha, senhaChamada.tipoSenha) 
         		&& Objects.equals(numero, senhaChamada.numero)
-        		&& Objects.equals(timestampEmitida, senhaChamada.timestampEmitida)
+        		&& Objects.equals(timestampEmissao, senhaChamada.timestampEmissao)
         		&& Objects.equals(timestampChamada, senhaChamada.timestampChamada);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tipoSenha, numero, timestampEmitida, timestampChamada);
+        return Objects.hash(tipoSenha, numero, timestampEmissao, timestampChamada);
     }
 
     @Override
@@ -103,7 +104,7 @@ public class SenhaChamada implements Serializable {
         sb.append("SenhaChamada[");
         sb.append("tipoSenha='").append(getTipoSenha()).append("'").append(", ");
         sb.append("numero='").append(getNumero()).append("'").append(", ");
-        sb.append("timestampEmitida").append(getTimestampEmitida()).append("'").append(", ");
+        sb.append("timestampEmissao").append(getTimestampEmissao()).append("'").append(", ");
         sb.append("timestampChamada='").append(getTimestampChamada()).append("'");
         sb.append("]");
         return sb.toString();

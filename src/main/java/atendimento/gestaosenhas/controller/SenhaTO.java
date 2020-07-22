@@ -1,6 +1,10 @@
 package atendimento.gestaosenhas.controller;
 
-public class SenhaTO {
+import java.io.Serializable;
+
+public class SenhaTO implements Serializable {
+
+	private static final long serialVersionUID = -4059745084193838625L;
 
 	protected String tipoSenha;
 	protected Integer numero;
