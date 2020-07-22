@@ -101,7 +101,7 @@ public class Senha implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("SenhaChamada[");
+        sb.append("Senha[");
         sb.append("tipoSenha='").append(getTipoSenha()).append("'").append(", ");
         sb.append("numero='").append(getNumero()).append("'").append(", ");
         sb.append("timestampEmissao").append(getTimestampEmissao()).append("'").append(", ");
