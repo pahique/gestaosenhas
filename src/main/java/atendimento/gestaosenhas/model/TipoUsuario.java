@@ -1,4 +1,4 @@
-package processoseletivo.gestaosenhas.model;
+package atendimento.gestaosenhas.model;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -15,9 +15,10 @@ public class TipoUsuario implements Serializable {
 	
 	@Id
 	protected Integer codigo;
-
+	
     protected String descricao;
 
+    
     public TipoUsuario() {
     }
 

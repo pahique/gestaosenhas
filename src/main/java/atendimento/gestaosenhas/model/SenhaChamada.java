@@ -1,13 +1,17 @@
-package processoseletivo.gestaosenhas.model;
+package atendimento.gestaosenhas.model;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,10 +23,16 @@ public class SenhaChamada implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long id;
+	
 	protected Date timestampEmitida;
+	
 	protected Date timestampChamada;
+	
+	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.REFRESH)
+	@JoinColumn(name = "codigo_tipo_senha", referencedColumnName = "codigo")
 	protected TipoSenha tipoSenha;
-    protected Integer numero;
+    
+	protected Integer numero;
     // protected Integer numeroGuiche;
 
     public SenhaChamada() {

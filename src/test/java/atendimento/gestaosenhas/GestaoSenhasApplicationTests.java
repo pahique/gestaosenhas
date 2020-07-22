@@ -1,10 +1,10 @@
-package processoseletivo.gestaosenhas;
+package atendimento.gestaosenhas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GestaosenhasApplicationTests {
+class GestaoSenhasApplicationTests {
 
 	@Test
 	void contextLoads() {

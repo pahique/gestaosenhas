@@ -1,9 +1,10 @@
-package processoseletivo.gestaosenhas.model;
+package atendimento.gestaosenhas.model;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -15,9 +16,14 @@ public class TipoSenha implements Serializable {
 	public static final Integer PREFERENCIAL = 1;
 	public static final Integer NORMAL = 2;
 	
-	protected Integer codigo;
-    protected String descricao;
+	@Id
+	protected Integer codigo;	
+	
+	protected String sigla;
+    
+	protected String descricao;
 
+	
     public TipoSenha() {
     }
 
@@ -28,6 +34,14 @@ public class TipoSenha implements Serializable {
     public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
+
+	public String getSigla() {
+		return sigla;
+	}
+
+	public void setSigla(String sigla) {
+		this.sigla = sigla;
+	}
 
     public String getDescricao() {
         return this.descricao;
@@ -45,22 +59,19 @@ public class TipoSenha implements Serializable {
             return false;
         }
         TipoSenha tipoSenha = (TipoSenha) o;
-        return Objects.equals(codigo, tipoSenha.codigo) && Objects.equals(descricao, tipoSenha.descricao);
+        return Objects.equals(codigo, tipoSenha.codigo) 
+        		&& Objects.equals(sigla, tipoSenha.sigla)
+        		&& Objects.equals(descricao, tipoSenha.descricao);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(codigo, descricao);
+        return Objects.hash(codigo, sigla, descricao);
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("TipoSenha[");
-        sb.append("codigo='").append(getCodigo()).append("', ");
-        sb.append("descricao='").append(getDescricao()).append("'");
-        sb.append("]");
-        return sb.toString();
+        return String.format("TipoSenha[codigo=%d,sigla=%s,descricao=%s", getCodigo(), getSigla(), getDescricao());
     }
 
 }
