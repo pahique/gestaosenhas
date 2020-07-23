@@ -109,7 +109,7 @@ public class GestaoSenhasController {
 			List<ContadorSenhaTO> lista = new ArrayList<ContadorSenhaTO>();
 			for (ContadorSenha contador : contadores) {
 				ContadorSenhaTO c = new ContadorSenhaTO();
-				c.setTipoSenha(contador.getCodigoTipoSenha().toString()); //TODO - resolver mapeamento!!!
+				c.setTipoSenha(contador.getTipoSenha().getSigla()); 
 				c.setNumeroAtual(contador.getNumeroAtual());
 				lista.add(c);
 			}

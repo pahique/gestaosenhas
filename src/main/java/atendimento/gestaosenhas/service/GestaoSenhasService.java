@@ -60,7 +60,7 @@ public class GestaoSenhasService {
 			novoContador.setNumeroAtual(contador.getNumeroAtual() + 1);
 			contadorSenhaRepository.save(novoContador);
 		} else {
-			LOGGER.error("Tipo de senha inválido: %d", tipoSenha);
+			LOGGER.error(String.format("Tipo de senha inválido: %d", tipoSenha));
 			throw new TipoSenhaInvalidoException(tipoSenha);
 		}
 		return novaSenha;

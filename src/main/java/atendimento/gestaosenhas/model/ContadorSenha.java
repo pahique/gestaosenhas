@@ -5,6 +5,9 @@ import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +21,10 @@ public class ContadorSenha implements Serializable {
 	
 	protected Integer numeroAtual;
 
+	@OneToOne
+	@JoinColumn(name="codigo_tipo_senha", referencedColumnName="codigo")
+	@MapsId
+	protected TipoSenha tipoSenha;
 	
     public ContadorSenha() {
     }
@@ -64,6 +71,14 @@ public class ContadorSenha implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
+	public TipoSenha getTipoSenha() {
+		return tipoSenha;
+	}
+
+	public void setTipoSenha(TipoSenha tipoSenha) {
+		this.tipoSenha = tipoSenha;
+	}
 
     
 }
