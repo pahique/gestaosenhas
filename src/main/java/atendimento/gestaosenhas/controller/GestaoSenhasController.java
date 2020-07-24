@@ -19,6 +19,7 @@ import atendimento.gestaosenhas.model.ContadorSenha;
 import atendimento.gestaosenhas.model.Senha;
 import atendimento.gestaosenhas.service.GestaoSenhasService;
 import atendimento.gestaosenhas.service.TipoSenhaInvalidoException;
+import atendimento.gestaosenhas.util.Formatter;
 
 @RestController
 @RequestMapping("/api")
@@ -38,11 +39,13 @@ public class GestaoSenhasController {
 			SenhaTO s = new SenhaTO();
 			s.setTipoSenha(senha.getTipoSenha().getSigla());
 			s.setNumero(senha.getNumero());
+			s.setSenhaFormatada(Formatter.formatSenha(s.getTipoSenha(), s.getNumero()));
 			result.setSenha(s);
 		} else {
 			SenhaTO s = new SenhaTO();
 			s.setTipoSenha("");
 			s.setNumero(0);
+			s.setSenhaFormatada(Formatter.formatSenha(s.getTipoSenha(), s.getNumero()));
 			result.setSenha(s);
 			result.setError("Nenhuma senha foi chamada");
 		}
@@ -62,6 +65,7 @@ public class GestaoSenhasController {
 					SenhaTO s = new SenhaTO();
 					s.setTipoSenha(senha.getTipoSenha().getSigla());
 					s.setNumero(senha.getNumero());
+					s.setSenhaFormatada(Formatter.formatSenha(s.getTipoSenha(), s.getNumero()));
 					result.setSenha(s);
 				} else {
 					result.setError("Erro ao gerar nova senha");
@@ -85,6 +89,7 @@ public class GestaoSenhasController {
 				SenhaTO s = new SenhaTO();
 				s.setTipoSenha(senha.getTipoSenha().getSigla());
 				s.setNumero(senha.getNumero());
+				s.setSenhaFormatada(Formatter.formatSenha(s.getTipoSenha(), s.getNumero()));
 				result.setSenha(s);
 			} else {
 				result.setError("Nenhuma senha a ser chamada");

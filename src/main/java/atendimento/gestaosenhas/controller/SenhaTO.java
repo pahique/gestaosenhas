@@ -8,6 +8,7 @@ public class SenhaTO implements Serializable {
 
 	protected String tipoSenha;
 	protected Integer numero;
+	protected String senhaFormatada;
 	
 	public SenhaTO() {
 	}
@@ -26,6 +27,14 @@ public class SenhaTO implements Serializable {
 
 	public void setNumero(Integer numero) {
 		this.numero = numero;
+	}
+
+	public String getSenhaFormatada() {
+		return senhaFormatada;
+	}
+
+	public void setSenhaFormatada(String senhaFormatada) {
+		this.senhaFormatada = senhaFormatada;
 	}
 
 }
