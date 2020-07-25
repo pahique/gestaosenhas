@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
@@ -6,6 +6,27 @@ function App() {
   const [senhaAtual, setSenhaAtual] = useState('-----'); 
   const [senhaEmitida, setSenhaEmitida] = useState('-----'); 
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    };
+    fetch('/gestaosenhas/api/senha/ultima', requestOptions)
+      .then(response => response.json())
+      .then(resposta => {
+          //console.log(resposta);
+          if (resposta.senha) {
+            setSenhaAtual(resposta.senha.senhaFormatada);
+            setError('');
+          } else {
+            setError(resposta.error);
+          }
+        }).catch(error => {
+          console.log(error);
+          setError("Erro ao obter ultima senha chamada");
+        });
+  }, []);
 
   const handleChamarProximaSenha = () => {
     const requestOptions = {
@@ -21,6 +42,7 @@ function App() {
             setSenhaAtual(resposta.senha.senhaFormatada);
             setError('');
           } else {
+            setSenhaAtual('-----');
             setError(resposta.error);
           }
         }).catch(error => {
