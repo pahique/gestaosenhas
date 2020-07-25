@@ -4,16 +4,18 @@ body, div, section, main, header, h1, h2 {
   padding: 0;
 }
 
-body {
-  width: 50%;
+#root {
+  width: 100%;
+  display: flex;
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
 }
 
 .App {
-  text-align: center;
   color: whitesmoke;
+  width: 40%;
+  min-width: 600px;
 }
 
 .App-header {
@@ -83,12 +85,13 @@ legend {
   justify-content: flex-start;
   align-items: center;
   color: darkslategray;
+  margin-top: 20px;
   margin-bottom: 20px;
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 .App-section button {
-  margin: 0px 10px;
+  margin: 5px 0px 5px 20px;
   padding: 10px 20px;
   background-color: steelblue;
   color: whitesmoke;

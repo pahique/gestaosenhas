@@ -114,7 +114,6 @@ function App() {
             <button onClick={handlerZerarContadores}>Zerar contadores</button> 
           </div>
         </section>
-        <hr/>
         <section className="App-section">
           <h1>Público</h1>
           <div className="button-section">
