@@ -6,19 +6,19 @@ public class SenhaTO implements Serializable {
 
 	private static final long serialVersionUID = -4059745084193838625L;
 
-	protected String tipoSenha;
+	protected String siglaTipoSenha;
 	protected Integer numero;
 	protected String senhaFormatada;
 	
 	public SenhaTO() {
 	}
 
-	public String getTipoSenha() {
-		return tipoSenha;
+	public String getSiglaTipoSenha() {
+		return siglaTipoSenha;
 	}
 
-	public void setTipoSenha(String tipoSenha) {
-		this.tipoSenha = tipoSenha;
+	public void setSiglaTipoSenha(String siglaTipoSenha) {
+		this.siglaTipoSenha = siglaTipoSenha;
 	}
 
 	public Integer getNumero() {

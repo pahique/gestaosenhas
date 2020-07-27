@@ -7,6 +7,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,7 @@ import atendimento.gestaosenhas.service.TipoSenhaInvalidoException;
 import atendimento.gestaosenhas.util.Formatter;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
 public class GestaoSenhasController {
 
@@ -30,6 +33,9 @@ public class GestaoSenhasController {
     @Autowired
     GestaoSenhasService service;
     
+    @Autowired
+    SimpMessagingTemplate simpMessagingTemplate;
+    
 	@GetMapping("/senha/ultima")
 	public RespostaSenhaTO getUltimaSenhaChamada() {
 		LOGGER.debug("getUltimaSenhaChamada()");
@@ -37,15 +43,15 @@ public class GestaoSenhasController {
 		Senha senha = service.getUltimaSenhaChamada();
 		if (senha != null) {
 			SenhaTO s = new SenhaTO();
-			s.setTipoSenha(senha.getTipoSenha().getSigla());
+			s.setSiglaTipoSenha(senha.getTipoSenha().getSigla());
 			s.setNumero(senha.getNumero());
-			s.setSenhaFormatada(Formatter.formatSenha(s.getTipoSenha(), s.getNumero()));
+			s.setSenhaFormatada(Formatter.formatSenha(s.getSiglaTipoSenha(), s.getNumero()));
 			result.setSenha(s);
 		} else {
 			SenhaTO s = new SenhaTO();
-			s.setTipoSenha("");
+			s.setSiglaTipoSenha("");
 			s.setNumero(0);
-			s.setSenhaFormatada(Formatter.formatSenha(s.getTipoSenha(), s.getNumero()));
+			s.setSenhaFormatada(Formatter.formatSenha(s.getSiglaTipoSenha(), s.getNumero()));
 			result.setSenha(s);
 			result.setError("Nenhuma senha foi chamada");
 		}
@@ -63,9 +69,9 @@ public class GestaoSenhasController {
 				Senha senha = service.gerarNovaSenha(param.getTipoSenha());
 				if (senha != null) {
 					SenhaTO s = new SenhaTO();
-					s.setTipoSenha(senha.getTipoSenha().getSigla());
+					s.setSiglaTipoSenha(senha.getTipoSenha().getSigla());
 					s.setNumero(senha.getNumero());
-					s.setSenhaFormatada(Formatter.formatSenha(s.getTipoSenha(), s.getNumero()));
+					s.setSenhaFormatada(Formatter.formatSenha(s.getSiglaTipoSenha(), s.getNumero()));
 					result.setSenha(s);
 				} else {
 					result.setError("Erro ao gerar nova senha");
@@ -79,6 +85,7 @@ public class GestaoSenhasController {
 		return result;
 	}
 	
+    //@RolesAllowed("GERENTE")
 	@PostMapping("/senha/proxima")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public RespostaSenhaTO chamarProximaSenha() {
@@ -87,12 +94,14 @@ public class GestaoSenhasController {
 			Senha senha = service.chamarProximaSenha();
 			if (senha != null) {
 				SenhaTO s = new SenhaTO();
-				s.setTipoSenha(senha.getTipoSenha().getSigla());
+				s.setSiglaTipoSenha(senha.getTipoSenha().getSigla());
 				s.setNumero(senha.getNumero());
-				s.setSenhaFormatada(Formatter.formatSenha(s.getTipoSenha(), s.getNumero()));
+				s.setSenhaFormatada(Formatter.formatSenha(s.getSiglaTipoSenha(), s.getNumero()));
 				result.setSenha(s);
+				this.simpMessagingTemplate.convertAndSend("/topic/senha", s.getSenhaFormatada());
 			} else {
 				result.setError("Nenhuma senha a ser chamada");
+				this.simpMessagingTemplate.convertAndSend("/topic/senha", "");
 			}
 		} catch(Exception e) {
 			result.setError("Erro ao chamar próxima senha");

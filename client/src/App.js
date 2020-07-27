@@ -1,13 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import SockJS from 'sockjs-client';
+import StompJS from 'stompjs';
 import './App.css';
 
 function App() {
 
-  const [senhaAtual, setSenhaAtual] = useState('-----'); 
-  const [senhaEmitida, setSenhaEmitida] = useState('-----'); 
+  const senhaVazia = '-----';
+  const [senhaAtual, setSenhaAtual] = useState(senhaVazia); 
+  const [senhaEmitida, setSenhaEmitida] = useState(senhaVazia); 
   const [error, setError] = useState('');
 
   useEffect(() => {
+    let socket = new SockJS('http://localhost:8080/gestaosenhas/ws/');
+    let stompClient = StompJS.over(socket);
+    if (stompClient && !stompClient.connected) {
+      stompClient.debug = () => {};
+      stompClient.connect({}, () => {
+        stompClient.subscribe('/topic/senha', (frame) => {
+          let senha = (frame.body !== '' ? frame.body : senhaVazia);
+          setSenhaAtual(senha);
+          setError('');
+        });
+      });
+    }
+
     const requestOptions = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -27,7 +43,7 @@ function App() {
           setError("Erro ao obter ultima senha chamada");
         });
   }, []);
-
+  
   const handleChamarProximaSenha = () => {
     const requestOptions = {
       method: 'POST',
@@ -42,7 +58,7 @@ function App() {
             setSenhaAtual(resposta.senha.senhaFormatada);
             setError('');
           } else {
-            setSenhaAtual('-----');
+            setSenhaAtual(senhaVazia);
             setError(resposta.error);
           }
         }).catch(error => {
