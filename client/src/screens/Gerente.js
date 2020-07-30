@@ -7,7 +7,7 @@ const Gerente = (props) => {
             <h1>Gerente</h1>
             <div className="button-section">
                 <button onClick={props.onChamarProxima}>Chamar próxima senha</button>
-                <button onClick={props.onZerarContadores}>Zerar contadores</button> 
+                <button onClick={props.onZerarContadores}>Reiniciar contadores</button> 
             </div>
         </section>
     );

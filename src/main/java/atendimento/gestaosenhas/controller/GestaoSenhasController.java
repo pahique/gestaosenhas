@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -86,7 +85,6 @@ public class GestaoSenhasController {
 		return result;
 	}
 	
-	@PreAuthorize("hasRole('GERENTE')")
 	@PostMapping("/admin/senha/proxima")
 	@ResponseStatus(code = HttpStatus.OK)
 	public RespostaSenhaTO chamarProximaSenha() {
@@ -110,7 +108,6 @@ public class GestaoSenhasController {
 		return result;
 	}
 	
-	@PreAuthorize("hasRole('GERENTE')")
 	@DeleteMapping("/admin/senha/reset")
 	@ResponseStatus(code = HttpStatus.OK)
 	public RespostaContadorSenhaTO reiniciarContagemSenhas(@RequestBody ParamTipoSenhaTO param) {

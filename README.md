@@ -40,6 +40,8 @@ npm start
 
 * Ambos os perfis conseguem visualizar o painel com a última senha chamada. Quando o gerente chama a próxima senha, o painel é atualizado em todas as janelas abertas.
 
+* Foi criada uma segurança na API do gerente, tornando necessário usuário/senha. Usar 'gerente/password' nesse caso.
+
 
 
 

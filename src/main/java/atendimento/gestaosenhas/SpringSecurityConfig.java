@@ -30,7 +30,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/").permitAll()
             .and()
             .csrf().disable()
-            .formLogin().disable();
+            .formLogin();
     }
 
 }
