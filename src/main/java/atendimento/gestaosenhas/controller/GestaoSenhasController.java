@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -85,9 +86,9 @@ public class GestaoSenhasController {
 		return result;
 	}
 	
-    //@RolesAllowed("GERENTE")
-	@PostMapping("/senha/proxima")
-	@ResponseStatus(code = HttpStatus.CREATED)
+	@PreAuthorize("hasRole('GERENTE')")
+	@PostMapping("/admin/senha/proxima")
+	@ResponseStatus(code = HttpStatus.OK)
 	public RespostaSenhaTO chamarProximaSenha() {
 		RespostaSenhaTO result = new RespostaSenhaTO();
 		try {
@@ -100,7 +101,7 @@ public class GestaoSenhasController {
 				result.setSenha(s);
 				this.simpMessagingTemplate.convertAndSend("/topic/senha", s.getSenhaFormatada());
 			} else {
-				result.setError("Nenhuma senha a ser chamada");
+				result.setError("Nenhuma senha em espera");
 				this.simpMessagingTemplate.convertAndSend("/topic/senha", "");
 			}
 		} catch(Exception e) {
@@ -109,7 +110,8 @@ public class GestaoSenhasController {
 		return result;
 	}
 	
-	@DeleteMapping("/senha/reset")
+	@PreAuthorize("hasRole('GERENTE')")
+	@DeleteMapping("/admin/senha/reset")
 	@ResponseStatus(code = HttpStatus.OK)
 	public RespostaContadorSenhaTO reiniciarContagemSenhas(@RequestBody ParamTipoSenhaTO param) {
 		RespostaContadorSenhaTO result = new RespostaContadorSenhaTO();

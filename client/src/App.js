@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import StompJS from 'stompjs';
+
+import PainelSenha from './screens/PainelSenha';
+import Gerente from './screens/Gerente';
+import Cliente from './screens/Cliente';
+
 import './App.css';
+
 
 function App() {
 
@@ -50,7 +57,7 @@ function App() {
       headers: { 'Content-Type': 'application/json' },
       body: ''
     };
-    fetch('/gestaosenhas/api/senha/proxima', requestOptions)
+    fetch('/gestaosenhas/api/admin/senha/proxima', requestOptions)
       .then(response => response.json())
       .then(resposta => {
           //console.log(resposta);
@@ -73,7 +80,7 @@ function App() {
       headers: { 'Content-Type': 'application/json' },
       body: '{}'
     };
-    fetch('/gestaosenhas/api/senha/reset', requestOptions)
+    fetch('/gestaosenhas/api/admin/senha/reset', requestOptions)
       .then(response => response.json())
       .then(resposta => {
           //console.log(resposta);
@@ -114,35 +121,20 @@ function App() {
         Gestão de Senhas de Atendimento
       </header>
       <main className="App-main">
-        <section className="painel-senha chamada">
-          <fieldset>
-            <legend>Senha chamada</legend>
-            {senhaAtual}
-          </fieldset>
-        </section>
-        <section className="App-messages">
-        {error}
-        </section>
-        <section className="App-section">
-          <h1>Gerente</h1>
-          <div className="button-section">
-            <button onClick={handleChamarProximaSenha}>Chamar próxima senha</button>
-            <button onClick={handlerZerarContadores}>Zerar contadores</button> 
-          </div>
-        </section>
-        <section className="App-section">
-          <h1>Público</h1>
-          <div className="button-section">
-            <button onClick={() => handleNovaSenha(1)}>Emitir senha preferencial</button> 
-            <button onClick={() => handleNovaSenha(2)}>Emitir senha normal</button>
-          </div>
-          <section className="painel-senha emitida">
-            <fieldset>
-              <legend>Senha emitida</legend>
-              {senhaEmitida}
-            </fieldset>
-          </section>
-        </section>
+        <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            <PainelSenha senha={senhaAtual} />
+            <section className="App-messages">{error}</section>
+            <Cliente onEmitirPreferencial={() => handleNovaSenha(1)} onEmitirNormal={() => handleNovaSenha(2)} senha={senhaEmitida} />            
+          </Route>
+          <Route exact path="/gerente">
+            <PainelSenha senha={senhaAtual} />
+            <section className="App-messages">{error}</section>
+            <Gerente onChamarProxima={handleChamarProximaSenha} onZerarContadores={handlerZerarContadores} />            
+          </Route>
+        </Switch>
+        </BrowserRouter>
       </main>
     </div>
   );

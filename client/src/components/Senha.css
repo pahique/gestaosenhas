@@ -1,0 +1,24 @@
+.painel-senha {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+  
+.painel-senha fieldset {
+    border: 2px solid whitesmoke;
+    border-radius: 10px;
+    padding: 10px 40px;
+    min-width: 3em;
+    min-height: 1em;
+    margin: 20px 0px 40px 0px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 5em;
+}
+  
+legend {
+    font-size: 0.3em;
+    font-weight: bold;
+}
+

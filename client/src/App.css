@@ -37,38 +37,6 @@ body, div, section, main, header, h1, h2 {
   min-height: 90vh;
 }
 
-.painel-senha {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.painel-senha fieldset {
-  border: 2px solid whitesmoke;
-  border-radius: 10px;
-  padding: 10px 40px;
-  min-width: 3em;
-  min-height: 1em;
-  margin: 40px 0px;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 5em;
-}
-
-legend {
-  font-size: 0.3em;
-  font-weight: bold;
-}
-
-.App-section {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-}
-
 .App-messages {
   display: flex;
   flex-flow: row wrap;
@@ -79,39 +47,41 @@ legend {
   color: orangered;
 }
 
+.App-section {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
 .App-section h1 {
   width: 100%;
   display: flex;
-  justify-content: flex-start;
+  flex-flow: row wrap;
+  justify-content: center;
   align-items: center;
   color: darkslategray;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 20px;
+  margin: 20px;
+}
+
+.button-section {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 20px;
 }
 
 .App-section button {
-  margin: 5px 0px 5px 20px;
   padding: 10px 20px;
+  margin-bottom: 20px;
+  width: 100%;
   background-color: steelblue;
   color: whitesmoke;
   cursor: pointer;
   border: 0;
   font-size: 1rem;
-}
-
-.chamada fieldset {
-  color: orangered;
-  border-color: orangered;
-}
-
-.emitida fieldset {
-  color: darkslategray;
-  border-color: darkslategray;
-}
-
-.App-link {
-  color: #61dafb;
 }
 
 
